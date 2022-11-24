@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       <NavbarB className="position-sticky sticky-top mb-3 bg-white shadow-sm">
-        <Container>
+        <Container className="container-fluid">
           <Nav className="me-auto">
             <Nav.Link to="/" as={Link}>
               Home
