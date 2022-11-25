@@ -1,8 +1,10 @@
 import { Navbar as NavbarB, Container, Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Cart } from "react-bootstrap-icons";
+import { useCartContext } from "../context/ShoppingCartContext";
 
 const Navbar = () => {
+  const { getNoOfItemsInCart, setShouldShow } = useCartContext();
   return (
     <>
       <NavbarB className="position-sticky sticky-top mb-3 bg-white shadow-sm">
@@ -19,8 +21,11 @@ const Navbar = () => {
             </Nav.Link>
           </Nav>
           <Button
+            onClick={(e) => setShouldShow(true)}
             variant="outline-primary"
-            className="rounded-circle position-relative d-flex justify-content-center align-items-center"
+            className={`${
+              getNoOfItemsInCart() !== 0 ? "" : "invisible"
+            } rounded-circle position-relative d-flex cursor-pointer justify-content-center align-items-center`}
             style={{ height: "3em", width: "3em", transform: "scale(1)" }}
           >
             <svg
@@ -33,18 +38,20 @@ const Navbar = () => {
             >
               <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
             </svg>
-            <div
-              className="position-absolute rounded-circle d-flex justify-content-center align-items-center bg-danger text-center fw-bolder text-light"
-              style={{
-                padding: "0.9em",
-                height: "1.5em",
-                width: "1.5em",
-                right: "-16px",
-                top: "22px",
-              }}
-            >
-              <div className="">2</div>
-            </div>
+            {getNoOfItemsInCart() !== 0 ? (
+              <div
+                className="position-absolute rounded-circle d-flex justify-content-center align-items-center bg-danger text-center fw-bolder text-light"
+                style={{
+                  padding: "0.9em",
+                  height: "1.5em",
+                  width: "1.5em",
+                  right: "-16px",
+                  top: "22px",
+                }}
+              >
+                <div className="">{getNoOfItemsInCart()}</div>
+              </div>
+            ) : null}
           </Button>
         </Container>
       </NavbarB>
